@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "testa": 150,
+    "braccia": 78,
+    "gambe": 48,
+    "busto": 113
+  },
+  {
+    "id": 2,
+    "testa": 30,
+    "braccia": 95,
+    "gambe": 127,
+    "busto": 17
+  },
+  {
+    "id": 3,
+    "testa": 62,
+    "braccia": 143,
+    "gambe": 163,
+    "busto": 52
+  },
+  {
+    "id": 4,
+    "testa": 17,
+    "braccia": 56,
+    "gambe": 64,
+    "busto": 89
+  },
+  {
+    "id": 5,
+    "testa": 95,
+    "braccia": 112,
+    "gambe": 92,
+    "busto": 78
+  },
+  {
+    "id": 6,
+    "testa": 183,
+    "braccia": 14,
+    "gambe": 142,
+    "busto": 199
+  },
+  {
+    "id": 7,
+    "testa": 42,
+    "braccia": 71,
+    "gambe": 94,
+    "busto": 26
+  },
+  {
+    "id": 8,
+    "testa": 58,
+    "braccia": 130,
+    "gambe": 5,
+    "busto": 111
+  },
+  {
+    "id": 9,
+    "testa": 79,
+    "braccia": 84,
+    "gambe": 161,
+    "busto": 129
+  },
+  {
+    "id": 10,
+    "testa": 103,
+    "braccia": 34,
+    "gambe": 84,
+    "busto": 176
+  }
+]
