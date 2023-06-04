@@ -7,6 +7,10 @@ let omini = [];
 
 let ultimaCaratteristicaCliccata = null;
 
+function refreshPage(){
+  window.location.reload();
+} 
+
 // Funzione per disegnare gli omini
 function drawOmino() {
   // Carica i dati dal file JSON
@@ -33,7 +37,7 @@ function sortOmino(key) {
   omini.sort((a, b) => (a.attributi[key]) - (b.attributi[key]));
   console.log(omini);
   for (var i = 0; i < omini.length; i++) {
-    omini[i].moveTo(i, 5000 + Math.floor(Math.random() * 3000));
+    omini[i].moveTo(i);
   }
 }
 
@@ -66,7 +70,7 @@ class Omino {
 
     // Definizione delle scale per le dimensioni dei vari attributi
     let scaleHead = [this.width * 2 / 10, this.width * 2 / 8];
-    let scaleLegs = [this.width * 2 / 4, this.width];
+    let scaleLegs = [this.width * 2 / 4, this.width * 2];
     let scaleArms = [this.width * 2 / 4, this.width * 1.5];
     let scaleBody = [this.width * 2 / 3, this.width];
 
@@ -109,8 +113,8 @@ class Omino {
       tip.style("opacity", 1)
         .html("Valori caratteristiche" +
           "<br/> <b/>" + (ultimaCaratteristicaCliccata === 'testa' ? "<span style='color:green'>" : "") + "Testa: " + attributi.testa + (ultimaCaratteristicaCliccata === 'testa' ? "</span>" : "") +
-          "<br/> " + (ultimaCaratteristicaCliccata === 'busto' ? "<span style='color:green'>" : "") + "Busto: " + attributi.busto + (ultimaCaratteristicaCliccata === 'busto' ? "</span>" : "") +
           "<br/> " + (ultimaCaratteristicaCliccata === 'braccia' ? "<span style='color:green'>" : "") + "Braccia: " + attributi.braccia + (ultimaCaratteristicaCliccata === 'braccia' ? "</span>" : "") +
+          "<br/> " + (ultimaCaratteristicaCliccata === 'busto' ? "<span style='color:green'>" : "") + "Busto: " + attributi.busto + (ultimaCaratteristicaCliccata === 'busto' ? "</span>" : "") +
           "<br/> " + (ultimaCaratteristicaCliccata === 'gambe' ? "<span style='color:green'>" : "") + "Gambe: " + attributi.gambe + (ultimaCaratteristicaCliccata === 'gambe' ? "</span>" : ""))
         .style("left", mouseX + this.width / 2 + "px")
         .style("top", (mouseY + 50) + "px");
@@ -140,6 +144,7 @@ class Omino {
     this.busto.append('line')
       .style("stroke", colors[x_pos])
       .style("stroke-width", 6)
+      .style("stroke-linecap", "square")
       .attr("x1", this.width / 2)
       .attr("y1", this.y + scaleTesta(attributi.testa))
       .attr("x2", this.width / 2)
@@ -211,21 +216,13 @@ class Omino {
 
   // Muovi l'Omino alla posizione specificata
   // duration specifica la durata dell'animazione in millisecondi (imposta a 500 se non viene specificata)
-  moveTo(x, duration = 500) {
+  moveTo(x) {
     let x1 = x * this.width - this.x_offset;
 
     let delay_duration = Math.floor(Math.random() * 500);
-    let turn_duration = Math.floor(Math.random() * duration / 2) - delay_duration;
-    if (turn_duration < 0) turn_duration = 0;
-
-    let move_duration = 500;
+    let move_duration = 1000;
 
     setTimeout(() => {
-      this.svg
-        .transition()
-        .delay(10)
-        .duration(turn_duration)
-        .attr('transform', 'translate(' + x1 + ')');
       this.svg
         .transition()
         .delay(10)

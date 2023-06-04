@@ -42,3 +42,8 @@ body {
     opacity: 0;
     transition: .3s opacity;
 }
+
+.button {
+    border-radius: 12px;
+    text-align: center;
+}
