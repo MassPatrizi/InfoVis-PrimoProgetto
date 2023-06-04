@@ -111,7 +111,8 @@ class Omino {
       var mouseX = event.clientX;
       var mouseY = event.clientY;
       tip.style("opacity", 1)
-        .html("Valori caratteristiche" +
+        .html("Valori caratteristiche" + 
+          "<br/><span style='color:red'>Omino #" + (x_pos +1) + "</span>" +
           "<br/> <b/>" + (ultimaCaratteristicaCliccata === 'testa' ? "<span style='color:green'>" : "") + "Testa: " + attributi.testa + (ultimaCaratteristicaCliccata === 'testa' ? "</span>" : "") +
           "<br/> " + (ultimaCaratteristicaCliccata === 'braccia' ? "<span style='color:green'>" : "") + "Braccia: " + attributi.braccia + (ultimaCaratteristicaCliccata === 'braccia' ? "</span>" : "") +
           "<br/> " + (ultimaCaratteristicaCliccata === 'busto' ? "<span style='color:green'>" : "") + "Busto: " + attributi.busto + (ultimaCaratteristicaCliccata === 'busto' ? "</span>" : "") +
