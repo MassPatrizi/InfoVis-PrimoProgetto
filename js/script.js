@@ -5,6 +5,8 @@ const height = window.innerHeight;
 // Array per memorizzare gli oggetti Omino
 let omini = [];
 
+let ultimaCaratteristicaCliccata = null;
+
 // Funzione per disegnare gli omini
 function drawOmino() {
   // Carica i dati dal file JSON
@@ -27,6 +29,7 @@ function drawOmino() {
 
 // Funzione per ordinare gli Omini in base all'attributo selezionato
 function sortOmino(key) {
+  ultimaCaratteristicaCliccata = key;
   omini.sort((a, b) => (a.attributi[key]) - (b.attributi[key]));
   console.log(omini);
   for (var i = 0; i < omini.length; i++) {
@@ -105,10 +108,10 @@ class Omino {
       var mouseY = event.clientY;
       tip.style("opacity", 1)
         .html("Valori caratteristiche" +
-          "<br/> <b/>Testa: " + attributi.testa +
-          "<br/> Busto: " + attributi.busto +
-          "<br/> Braccia: " + attributi.braccia +
-          "<br/> Gambe: " + attributi.gambe)
+          "<br/> <b/>" + (ultimaCaratteristicaCliccata === 'testa' ? "<span style='color:green'>" : "") + "Testa: " + attributi.testa + (ultimaCaratteristicaCliccata === 'testa' ? "</span>" : "") +
+          "<br/> " + (ultimaCaratteristicaCliccata === 'busto' ? "<span style='color:green'>" : "") + "Busto: " + attributi.busto + (ultimaCaratteristicaCliccata === 'busto' ? "</span>" : "") +
+          "<br/> " + (ultimaCaratteristicaCliccata === 'braccia' ? "<span style='color:green'>" : "") + "Braccia: " + attributi.braccia + (ultimaCaratteristicaCliccata === 'braccia' ? "</span>" : "") +
+          "<br/> " + (ultimaCaratteristicaCliccata === 'gambe' ? "<span style='color:green'>" : "") + "Gambe: " + attributi.gambe + (ultimaCaratteristicaCliccata === 'gambe' ? "</span>" : ""))
         .style("left", mouseX + this.width / 2 + "px")
         .style("top", (mouseY + 50) + "px");
     })
