@@ -15,10 +15,15 @@ function refreshPage(){
 function drawOmino() {
   // Carica i dati dal file JSON
   d3.json('../data/dataset.json').then(function (data) {
+    // Calcola il valore massimo di ogni attributo per utilizzarlo nelle scale
+    maxValoreTesta = getAttributoMax("testa",data);
+    maxValoreBusto = getAttributoMax("busto", data);
+    maxValoreBraccia = getAttributoMax("braccia", data);
+    maxValoreGambe = getAttributoMax("gambe", data);
     // Itera sui dati
     for (let i = 0; i < data.length; i++) {
       // Crea un nuovo oggetto Omino
-      omini[i] = new Omino(i, data[i], data.length);
+      omini[i] = new Omino(i, data[i], data.length,maxValoreTesta, maxValoreBraccia, maxValoreBusto, maxValoreGambe);
       // Aggiungi gli event listener per i vari attributi dell'Omino
       omini[i].testaListener(function () { sortOmino('testa') });
       omini[i].bracciaListener(function () { sortOmino('braccia') });
@@ -29,6 +34,19 @@ function drawOmino() {
   }).catch(function (error) {
     console.log(error);
   });
+  
+}
+
+// Funzione per calcolare il valore maggiore per un certo attributo nel dataset
+function getAttributoMax(attributo, data) {
+  let maxValore = -Infinity;
+  for (let i = 0; i < data.length; i++) {
+    const valore = data[i][attributo];
+    if (valore > maxValore) {
+      maxValore = valore;
+    }
+  }
+  return maxValore;
 }
 
 // Funzione per ordinare gli Omini in base all'attributo selezionato
@@ -55,9 +73,10 @@ var tip = d3.select("body").append("div")
   .attr("class", "tooltip")
   .style("opacity", 0)
 
+
 // Classe per l'oggetto Omino
 class Omino {
-  constructor(x_pos, attributi, dimensione = 10) {
+  constructor(x_pos, attributi, dimensione = 10, maxValoreTesta, maxValoreBraccia, maxValoreBusto, maxValoreGambe) {
     // Calcola la larghezza dell'Omino in base alla dimensione specificata
     this.width = document.body.clientWidth / dimensione - 2;
     this.height = window.innerHeight;
@@ -68,27 +87,21 @@ class Omino {
     // Array a cui accedere per colorare gli omini
     const colors = ["red", "blue", "green", "goldenrod", "orange", "purple", "pink", "brown", "gray", "black"];
 
-    // Definizione delle scale per le dimensioni dei vari attributi
-    let scaleHead = [this.width * 2 / 10, this.width * 2 / 8];
-    let scaleLegs = [this.width * 2 / 4, this.width * 2];
-    let scaleArms = [this.width * 2 / 4, this.width * 1.5];
-    let scaleBody = [this.width * 2 / 3, this.width];
-
     var scaleGambe = d3.scaleLinear();
-    scaleGambe.domain([0, 200]);
-    scaleGambe.range([scaleLegs[0], scaleLegs[1]]);
+    scaleGambe.domain([0, maxValoreGambe]);
+    scaleGambe.range([50, height / 3]);
 
     var scaleTesta = d3.scaleLinear();
-    scaleTesta.domain([0, 60]);
-    scaleTesta.range([scaleHead[0], scaleHead[1]]);
+    scaleTesta.domain([0, maxValoreTesta]);
+    scaleTesta.range([20, this.width / 2]);
 
     var scaleBraccia = d3.scaleLinear();
-    scaleBraccia.domain([0, 200]);
-    scaleBraccia.range([scaleArms[0], scaleArms[1]]);
+    scaleBraccia.domain([0, maxValoreBraccia]);
+    scaleBraccia.range([30, width/7]);
 
     var scaleBusto = d3.scaleLinear();
-    scaleBusto.domain([0, 100]);
-    scaleBusto.range([scaleBody[0], scaleBody[1]]);
+    scaleBusto.domain([0, maxValoreBusto]);
+    scaleBusto.range([50, height / 3]);
 
     this.x_offset = x_pos * this.width;
 
